@@ -2,28 +2,40 @@ package com.asalavei.hangman;
 
 public class Game {
 
-    private Game() {
+    private Hangman hangman;
+    private String word;
+
+    public Game() {
+        this.word = new Vocabulary().getRandomWord();
+        this.hangman = new Hangman(HangmanStep.STEP_ONE);
     }
 
-    public static void startGame() {
+    public String getWord() {
+        return word;
+    }
+
+    public void startGame() {
         // start the game
-        Hangman hangman = new Hangman(HangmanStep.STEP_SIX);
 
         hangman.printHangman();
+
+        System.out.println(hangman.getCurrentStep());
+
+        System.out.println("Word is " + getWord());
 
 
         // Play the game or quit (exit)
     }
 
-    public static void playGame() {
+    public void playGame() {
         // processing of game
     }
 
-    public static void quitGame() {
+    public void quitGame() {
         // quit the game
     }
 
-    public static boolean isOver() {
+    public boolean isGameOver() {
         return false;
     }
 

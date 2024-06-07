@@ -8,6 +8,14 @@ public class Hangman {
         this.currentStep = currentStep;
     }
 
+    public HangmanStep getCurrentStep() {
+        return currentStep;
+    }
+
+    public void setCurrentStep(HangmanStep currentStep) {
+        this.currentStep = currentStep;
+    }
+
     public void printHangman() {
         System.out.println(currentStep.getStep());
     }
