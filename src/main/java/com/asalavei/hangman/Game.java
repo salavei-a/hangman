@@ -4,9 +4,11 @@ public class Game {
 
     private Hangman hangman;
     private String word;
+    private Vocabulary vocabulary;
 
     public Game() {
-        this.word = new Vocabulary().getRandomWord();
+        this.vocabulary = Vocabulary.getInstance();
+        this.word = vocabulary.getWord();
         this.hangman = new Hangman(HangmanStep.STEP_ONE);
     }
 
@@ -22,6 +24,10 @@ public class Game {
         System.out.println(hangman.getCurrentStep());
 
         System.out.println("Word is " + getWord());
+
+
+        System.out.println("Word is " + vocabulary.getNextWord());
+
 
 
         // Play the game or quit (exit)
