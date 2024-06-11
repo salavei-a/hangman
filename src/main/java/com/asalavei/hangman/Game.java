@@ -8,12 +8,14 @@ public class Game {
     private Hangman hangman;
     private String word;
     private Vocabulary vocabulary;
+    private int attempt;
 
     private Game() {
         this.vocabulary = Vocabulary.getInstance();
         this.word = vocabulary.getWord();
         this.hangman = Hangman.createHangman();
         this.scanner = new Scanner(System.in);
+        this.attempt = 6;
     }
 
     public String getWord() {
@@ -40,10 +42,8 @@ public class Game {
         vocabulary.getNextWord();
         hangman.printHangman();
 
-
-        checkLetter(word);
         printAction();
-
+        checkLetter(scanner.nextLine());
 
         System.out.println("Word is " + getWord());
     }
@@ -52,9 +52,25 @@ public class Game {
         System.out.println("Exit the game");
     }
 
-    private void checkLetter(String word) {
+    private void checkLetter(String letter) {
+
+        if (word.contains(letter)) {
+            printWord(letter);
+        } else {
+            System.out.println("Такой буквы нет, осталось попыток: " + attempt--);
+            hangman.setCurrentStep(HangmanStep.STEP_ONE);
+        }
+
+    }
+
+    private void printWord(String letter) {
         for (int i = 0; i < word.length(); i++) {
-            System.out.print("*");
+
+            if (word.charAt(i) == letter.charAt(0)) {
+                System.out.print(word.charAt(i));
+            } else {
+                System.out.print("*");
+            }
         }
 
         System.out.println();
