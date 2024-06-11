@@ -9,7 +9,7 @@ public class Game {
     private String word;
     private Vocabulary vocabulary;
     private int attempt;
-    private String letters;
+    private StringBuilder currentWord;
 
     private Game() {
         this.vocabulary = Vocabulary.getInstance();
@@ -17,6 +17,7 @@ public class Game {
         this.hangman = Hangman.createHangman();
         this.scanner = new Scanner(System.in);
         this.attempt = 6;
+        this.currentWord = new StringBuilder("*".repeat(word.length()));
     }
 
     public String getWord() {
@@ -44,12 +45,20 @@ public class Game {
 
         while (isGameOver()) {
             hangman.printHangman();
-
             printAction();
+
+            if (currentWord.indexOf("*") == -1) {
+                System.out.println("Congratulations! You won. \nWord is " + getWord());
+                startGame();
+            }
+
             checkLetter(scanner.nextLine());
         }
 
+        hangman.printHangman();
         System.out.println("Word is " + getWord());
+
+        startGame();
     }
 
     private void exitGame() {
@@ -85,21 +94,24 @@ public class Game {
                     break;
             }
 
-            printWord(letter);
+            System.out.println(currentWord);
         }
     }
 
     private void printWord(String letter) {
+        StringBuilder temproaryWord = currentWord;
+        currentWord = new StringBuilder();
+
         for (int i = 0; i < word.length(); i++) {
 
             if (word.charAt(i) == letter.charAt(0)) {
-                System.out.print(word.charAt(i));
+                currentWord.append(word.charAt(i));
             } else {
-                System.out.print("*");
+                currentWord.append(temproaryWord.charAt(i));
             }
         }
 
-        System.out.println();
+        System.out.println(currentWord);
     }
 
     private void printAction() {
