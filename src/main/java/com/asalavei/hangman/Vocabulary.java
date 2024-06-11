@@ -8,11 +8,11 @@ import java.util.Scanner;
 
 public class Vocabulary {
 
+    private static Vocabulary INSTANCE = new Vocabulary();
+
     private final List<String> vocabularyList;
     private final Random random;
     private String word;
-
-    private static Vocabulary INSTANCE = new Vocabulary();
 
     private Vocabulary() {
         this.vocabularyList = loadVocabulary();
@@ -31,7 +31,7 @@ public class Vocabulary {
     public String getNextWord() {
         chooseNewWord();
 
-        return this.word;
+        return word;
     }
 
     private void chooseNewWord() {

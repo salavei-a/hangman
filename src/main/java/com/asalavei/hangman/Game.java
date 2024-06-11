@@ -1,11 +1,12 @@
 package com.asalavei.hangman;
 
 public class Game {
+
     private Hangman hangman;
     private String word;
     private Vocabulary vocabulary;
 
-    public Game() {
+    private Game() {
         this.vocabulary = Vocabulary.getInstance();
         this.word = vocabulary.getWord();
         this.hangman = Hangman.createHangman();
@@ -42,6 +43,12 @@ public class Game {
 
     public boolean isGameOver() {
         return false;
+    }
+
+    public static Game createGame() {
+        Game game = new Game();
+
+        return game;
     }
 
 }
