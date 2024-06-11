@@ -9,6 +9,7 @@ public class Game {
     private String word;
     private Vocabulary vocabulary;
     private int attempt;
+    private String letters;
 
     private Game() {
         this.vocabulary = Vocabulary.getInstance();
@@ -40,10 +41,13 @@ public class Game {
 
     private void playGame() {
         vocabulary.getNextWord();
-        hangman.printHangman();
 
-        printAction();
-        checkLetter(scanner.nextLine());
+        while (isGameOver()) {
+            hangman.printHangman();
+
+            printAction();
+            checkLetter(scanner.nextLine());
+        }
 
         System.out.println("Word is " + getWord());
     }
@@ -57,10 +61,32 @@ public class Game {
         if (word.contains(letter)) {
             printWord(letter);
         } else {
-            System.out.println("Такой буквы нет, осталось попыток: " + attempt--);
-            hangman.setCurrentStep(HangmanStep.STEP_ONE);
-        }
+            attempt--;
+            System.out.println("Такой буквы нет, осталось попыток: " + attempt);
 
+            switch (attempt) {
+                case 5:
+                    hangman.setCurrentStep(HangmanStep.STEP_ONE);
+                    break;
+                case 4:
+                    hangman.setCurrentStep(HangmanStep.STEP_TWO);
+                    break;
+                case 3:
+                    hangman.setCurrentStep(HangmanStep.STEP_THREE);
+                    break;
+                case 2:
+                    hangman.setCurrentStep(HangmanStep.STEP_FOUR);
+                    break;
+                case 1:
+                    hangman.setCurrentStep(HangmanStep.STEP_FIVE);
+                    break;
+                case 0:
+                    hangman.setCurrentStep(HangmanStep.STEP_SIX);
+                    break;
+            }
+
+            printWord(letter);
+        }
     }
 
     private void printWord(String letter) {
@@ -81,7 +107,7 @@ public class Game {
     }
 
     private boolean isGameOver() {
-        return false;
+        return attempt > 0;
     }
 
 }
