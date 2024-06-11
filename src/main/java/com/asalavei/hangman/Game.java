@@ -4,10 +4,10 @@ import java.util.Scanner;
 
 public class Game {
 
+    private final Scanner scanner;
     private Hangman hangman;
     private String word;
     private Vocabulary vocabulary;
-    private final Scanner scanner;
 
     private Game() {
         this.vocabulary = Vocabulary.getInstance();
@@ -37,17 +37,31 @@ public class Game {
     }
 
     private void playGame() {
-        System.out.println("Processing the game");
-
+        vocabulary.getNextWord();
         hangman.printHangman();
 
-        System.out.println(hangman.getCurrentStep());
+
+        checkLetter(word);
+        printAction();
+
+
         System.out.println("Word is " + getWord());
-        System.out.println("Word is " + vocabulary.getNextWord());
     }
 
     private void exitGame() {
         System.out.println("Exit the game");
+    }
+
+    private void checkLetter(String word) {
+        for (int i = 0; i < word.length(); i++) {
+            System.out.print("*");
+        }
+
+        System.out.println();
+    }
+
+    private void printAction() {
+        System.out.println("Введите букву: ");
     }
 
     private boolean isGameOver() {
