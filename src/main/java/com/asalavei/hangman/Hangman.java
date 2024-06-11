@@ -1,11 +1,10 @@
 package com.asalavei.hangman;
 
 public class Hangman {
-
     private HangmanStep currentStep;
 
-    public Hangman(HangmanStep currentStep) {
-        this.currentStep = currentStep;
+    private Hangman() {
+        this.currentStep = HangmanStep.STEP_START;
     }
 
     public HangmanStep getCurrentStep() {
@@ -18,5 +17,11 @@ public class Hangman {
 
     public void printHangman() {
         System.out.println(currentStep.getStep());
+    }
+
+    public static Hangman createHangman() {
+        Hangman hangman = new Hangman();
+
+        return hangman;
     }
 }

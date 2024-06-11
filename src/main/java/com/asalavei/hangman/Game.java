@@ -1,7 +1,6 @@
 package com.asalavei.hangman;
 
 public class Game {
-
     private Hangman hangman;
     private String word;
     private Vocabulary vocabulary;
@@ -9,7 +8,7 @@ public class Game {
     public Game() {
         this.vocabulary = Vocabulary.getInstance();
         this.word = vocabulary.getWord();
-        this.hangman = new Hangman(HangmanStep.STEP_ONE);
+        this.hangman = Hangman.createHangman();
     }
 
     public String getWord() {
