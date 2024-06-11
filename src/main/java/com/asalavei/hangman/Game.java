@@ -16,8 +16,6 @@ public class Game {
         this.word = vocabulary.getWord();
         this.hangman = Hangman.createHangman();
         this.scanner = new Scanner(System.in);
-        this.attempt = 6;
-        this.currentWord = new StringBuilder("*".repeat(word.length()));
     }
 
     public String getWord() {
@@ -31,34 +29,45 @@ public class Game {
     }
 
     public void startGame() {
-        System.out.println("Press to start a [N]ew game or e[X]it:");
+        String button;
 
-        String button = scanner.nextLine();
+        do {
+            System.out.println("Press to start a [N]ew game or e[X]it:");
+            button = scanner.nextLine();
 
-        if (button.equals("N") || button.equals("n")) {
-            playGame();
-        } else exitGame();
+            if (button.equalsIgnoreCase("N")) {
+                playGame();
+
+            } else if (button.equalsIgnoreCase("X")) {
+                exitGame();
+                return;
+            }
+
+        } while (!button.equalsIgnoreCase("X"));
     }
 
     private void playGame() {
-        vocabulary.getNextWord();
+        word = vocabulary.getNextWord();
+        currentWord = new StringBuilder("*".repeat(word.length()));
+        attempt = 6;
+        hangman.setCurrentStep(HangmanStep.STEP_START);
+
+        System.out.println("Word is " + currentWord);
 
         while (isGameOver()) {
-            hangman.printHangman();
-            printAction();
 
             if (currentWord.indexOf("*") == -1) {
-                System.out.println("Congratulations! You won. \nWord is " + getWord());
-                startGame();
+                System.out.println("Congratulations! You won. \nWord is " + getWord() + "\n");
+                return;
             }
 
+            hangman.printHangman();
+            System.out.println("Enter a letter: ");
             checkLetter(scanner.nextLine());
         }
 
         hangman.printHangman();
-        System.out.println("Word is " + getWord());
-
-        startGame();
+        System.out.println("Unfortunately you lost, try again. \nWord is " + getWord() + "\n");
     }
 
     private void exitGame() {
@@ -67,11 +76,21 @@ public class Game {
 
     private void checkLetter(String letter) {
 
+        if (letter == null || letter.isEmpty()) {
+            System.out.println("You have not entered any letters, please enter a letter");
+            return;
+        }
+
+        if (!letter.matches("[а-яА-яёЁ]")) {
+            System.out.println("Please enter a Russian letter");
+            return;
+        }
+
         if (word.contains(letter)) {
             printWord(letter);
         } else {
             attempt--;
-            System.out.println("Такой буквы нет, осталось попыток: " + attempt);
+            System.out.println("There is no such letter. Attempts left: " + attempt);
 
             switch (attempt) {
                 case 5:
@@ -99,7 +118,7 @@ public class Game {
     }
 
     private void printWord(String letter) {
-        StringBuilder temproaryWord = currentWord;
+        StringBuilder temporaryWord = new StringBuilder(currentWord);
         currentWord = new StringBuilder();
 
         for (int i = 0; i < word.length(); i++) {
@@ -107,15 +126,11 @@ public class Game {
             if (word.charAt(i) == letter.charAt(0)) {
                 currentWord.append(word.charAt(i));
             } else {
-                currentWord.append(temproaryWord.charAt(i));
+                currentWord.append(temporaryWord.charAt(i));
             }
         }
 
         System.out.println(currentWord);
-    }
-
-    private void printAction() {
-        System.out.println("Введите букву: ");
     }
 
     private boolean isGameOver() {

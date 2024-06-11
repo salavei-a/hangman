@@ -5,7 +5,6 @@ public class Hangman {
     private HangmanStep currentStep;
 
     private Hangman() {
-        this.currentStep = HangmanStep.STEP_START;
     }
 
     public HangmanStep getCurrentStep() {
