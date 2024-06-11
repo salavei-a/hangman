@@ -16,6 +16,12 @@ public class Game {
         return word;
     }
 
+    public static Game createGame() {
+        Game game = new Game();
+
+        return game;
+    }
+
     public void startGame() {
         // start the game
 
@@ -33,22 +39,16 @@ public class Game {
         // Play the game or quit (exit)
     }
 
-    public void playGame() {
+    private void playGame() {
         // processing of game
     }
 
-    public void quitGame() {
+    private void quitGame() {
         // quit the game
     }
 
-    public boolean isGameOver() {
+    private boolean isGameOver() {
         return false;
-    }
-
-    public static Game createGame() {
-        Game game = new Game();
-
-        return game;
     }
 
 }
