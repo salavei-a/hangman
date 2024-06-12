@@ -9,11 +9,10 @@ public class Game {
     private final Vocabulary vocabulary;
     private String word;
     private int attempt;
-    private StringBuilder currentWord;
+    private StringBuilder currentWordState;
 
     private Game() {
         this.vocabulary = Vocabulary.getInstance();
-        this.word = vocabulary.getWord();
         this.hangman = Hangman.getInstance();
         this.scanner = new Scanner(System.in);
     }
@@ -46,16 +45,16 @@ public class Game {
 
     private void playGame() {
         word = vocabulary.getNextWord();
-        currentWord = new StringBuilder("*".repeat(word.length()));
+        currentWordState = new StringBuilder("*".repeat(word.length()));
         attempt = 6;
         hangman.setCurrentStep(HangmanStep.STEP_START);
 
-        System.out.println("Word is " + currentWord);
+        System.out.println("Word is " + currentWordState);
 
         while (isGameOver()) {
 
-            if (currentWord.indexOf("*") == -1) {
-                System.out.println("Congratulations! You won. \nWord is " + getWord() + "\n");
+            if (currentWordState.indexOf("*") == -1) {
+                System.out.println("Congratulations! You won \nWord is " + getWord() + "\n");
                 return;
             }
 
@@ -66,7 +65,7 @@ public class Game {
         }
 
         hangman.printHangman();
-        System.out.println("Unfortunately you lost, try again. \nWord is " + getWord() + "\n");
+        System.out.println("Unfortunately you lost, try again \nWord is " + getWord() + "\n");
     }
 
     private void exitGame() {
@@ -80,8 +79,8 @@ public class Game {
             return;
         }
 
-        if (!letter.matches("[а-яА-ЯёЁ]")) {
-            System.out.println("Please enter a Russian letter");
+        if (!letter.matches("[а-яё]")) {
+            System.out.println("Please enter a lowercase Russian letter");
             return;
         }
 
@@ -89,28 +88,28 @@ public class Game {
             printWord(letter);
         } else {
             attempt--;
-            System.out.println("There is no such letter.");
+            System.out.println("There is no such letter");
 
             hangman.updateHangmanState(attempt);
 
-            System.out.println(currentWord);
+            System.out.println(currentWordState);
         }
     }
 
     private void printWord(String letter) {
-        StringBuilder temporaryWord = new StringBuilder(currentWord);
-        currentWord = new StringBuilder();
+        StringBuilder previousWordState = new StringBuilder(currentWordState);
+        currentWordState = new StringBuilder();
 
         for (int i = 0; i < word.length(); i++) {
 
             if (word.charAt(i) == letter.charAt(0)) {
-                currentWord.append(word.charAt(i));
+                currentWordState.append(word.charAt(i));
             } else {
-                currentWord.append(temporaryWord.charAt(i));
+                currentWordState.append(previousWordState.charAt(i));
             }
         }
 
-        System.out.println(currentWord);
+        System.out.println(currentWordState);
     }
 
     private boolean isGameOver() {

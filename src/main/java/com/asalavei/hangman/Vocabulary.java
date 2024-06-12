@@ -17,11 +17,6 @@ public class Vocabulary {
     private Vocabulary() {
         this.vocabularyList = loadVocabulary();
         this.random = new Random();
-        chooseNewWord();
-    }
-
-    public String getWord() {
-        return word;
     }
 
     public static Vocabulary getInstance() {
@@ -35,7 +30,7 @@ public class Vocabulary {
     }
 
     private void chooseNewWord() {
-        this.word = vocabularyList.get(random.nextInt(vocabularyList.size()));
+        word = vocabularyList.get(random.nextInt(vocabularyList.size()));
     }
 
     private List<String> loadVocabulary() {
