@@ -10,6 +10,7 @@ public class Game {
     private String word;
     private int attempt;
     private StringBuilder currentWordState;
+    private StringBuilder enteredLetters;
 
     private Game() {
         this.vocabulary = Vocabulary.getInstance();
@@ -47,6 +48,8 @@ public class Game {
         word = vocabulary.getNextWord();
         currentWordState = new StringBuilder("*".repeat(word.length()));
         attempt = 6;
+        enteredLetters = new StringBuilder();
+        String letter;
         hangman.setCurrentStep(HangmanStep.STEP_START);
 
         System.out.println("Word is " + currentWordState);
@@ -54,14 +57,17 @@ public class Game {
         while (isGameOver()) {
 
             if (currentWordState.indexOf("*") == -1) {
-                System.out.println("Congratulations! You won \nWord is " + getWord() + "\n");
+                System.out.println("Congratulations! You won\n");
                 return;
             }
 
             System.out.println("Attempts left: " + attempt);
             hangman.printHangman();
             System.out.println("Enter a letter: ");
-            checkLetter(scanner.nextLine());
+
+            letter = scanner.nextLine();
+            checkLetter(letter);
+            enteredLetters.append(letter);
         }
 
         hangman.printHangman();
@@ -74,25 +80,25 @@ public class Game {
 
     private void checkLetter(String letter) {
 
-        if (letter == null || letter.isEmpty()) {
-            System.out.println("You have not entered any letters, please enter a letter");
+        if (!letter.matches("[а-яё]") || letter.isEmpty()) {
+            System.out.println("Please enter a lowercase Russian letter");
             return;
         }
 
-        if (!letter.matches("[а-яё]")) {
-            System.out.println("Please enter a lowercase Russian letter");
+        if (enteredLetters.indexOf(letter) != -1) {
+            printCurrentWordState();
+            System.out.println("The letter \"" + letter + "\" has already been entered, please enter another letter");
             return;
         }
 
         if (word.contains(letter)) {
             printWord(letter);
         } else {
-            attempt--;
             System.out.println("There is no such letter");
+            printCurrentWordState();
 
+            attempt--;
             hangman.updateHangmanState(attempt);
-
-            System.out.println(currentWordState);
         }
     }
 
@@ -109,6 +115,10 @@ public class Game {
             }
         }
 
+        printCurrentWordState();
+    }
+
+    private void printCurrentWordState() {
         System.out.println(currentWordState);
     }
 
