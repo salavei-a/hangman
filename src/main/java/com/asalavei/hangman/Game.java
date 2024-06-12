@@ -81,7 +81,7 @@ public class Game {
             return;
         }
 
-        if (!letter.matches("[а-яА-яёЁ]")) {
+        if (!letter.matches("[а-яА-ЯёЁ]")) {
             System.out.println("Please enter a Russian letter");
             return;
         }
@@ -92,28 +92,32 @@ public class Game {
             attempt--;
             System.out.println("There is no such letter. Attempts left: " + attempt);
 
-            switch (attempt) {
-                case 5:
-                    hangman.setCurrentStep(HangmanStep.STEP_ONE);
-                    break;
-                case 4:
-                    hangman.setCurrentStep(HangmanStep.STEP_TWO);
-                    break;
-                case 3:
-                    hangman.setCurrentStep(HangmanStep.STEP_THREE);
-                    break;
-                case 2:
-                    hangman.setCurrentStep(HangmanStep.STEP_FOUR);
-                    break;
-                case 1:
-                    hangman.setCurrentStep(HangmanStep.STEP_FIVE);
-                    break;
-                case 0:
-                    hangman.setCurrentStep(HangmanStep.STEP_SIX);
-                    break;
-            }
+            updateHangmanState();
 
             System.out.println(currentWord);
+        }
+    }
+
+    private void updateHangmanState() {
+        switch (attempt) {
+            case 5:
+                hangman.setCurrentStep(HangmanStep.STEP_ONE);
+                break;
+            case 4:
+                hangman.setCurrentStep(HangmanStep.STEP_TWO);
+                break;
+            case 3:
+                hangman.setCurrentStep(HangmanStep.STEP_THREE);
+                break;
+            case 2:
+                hangman.setCurrentStep(HangmanStep.STEP_FOUR);
+                break;
+            case 1:
+                hangman.setCurrentStep(HangmanStep.STEP_FIVE);
+                break;
+            case 0:
+                hangman.setCurrentStep(HangmanStep.STEP_SIX);
+                break;
         }
     }
 
@@ -131,6 +135,7 @@ public class Game {
         }
 
         System.out.println(currentWord);
+        System.out.println("Attempts left: " + attempt);
     }
 
     private boolean isGameOver() {
