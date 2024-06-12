@@ -2,13 +2,10 @@ package com.asalavei.hangman;
 
 public class Hangman {
 
+    private static final Hangman INSTANCE = new Hangman();
     private HangmanStep currentStep;
 
     private Hangman() {
-    }
-
-    public HangmanStep getCurrentStep() {
-        return currentStep;
     }
 
     public void setCurrentStep(HangmanStep currentStep) {
@@ -19,9 +16,7 @@ public class Hangman {
         System.out.println(currentStep.getStep());
     }
 
-    public static Hangman createHangman() {
-        Hangman hangman = new Hangman();
-
-        return hangman;
+    public static Hangman getInstance() {
+        return INSTANCE;
     }
 }

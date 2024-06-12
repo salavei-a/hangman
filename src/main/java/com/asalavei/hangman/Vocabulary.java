@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class Vocabulary {
 
-    private static Vocabulary INSTANCE = new Vocabulary();
+    private static final Vocabulary INSTANCE = new Vocabulary();
 
     private final List<String> vocabularyList;
     private final Random random;

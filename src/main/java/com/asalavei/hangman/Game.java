@@ -5,16 +5,16 @@ import java.util.Scanner;
 public class Game {
 
     private final Scanner scanner;
-    private Hangman hangman;
+    private final Hangman hangman;
+    private final Vocabulary vocabulary;
     private String word;
-    private Vocabulary vocabulary;
     private int attempt;
     private StringBuilder currentWord;
 
     private Game() {
         this.vocabulary = Vocabulary.getInstance();
         this.word = vocabulary.getWord();
-        this.hangman = Hangman.createHangman();
+        this.hangman = Hangman.getInstance();
         this.scanner = new Scanner(System.in);
     }
 
@@ -23,9 +23,7 @@ public class Game {
     }
 
     public static Game createGame() {
-        Game game = new Game();
-
-        return game;
+        return new Game();
     }
 
     public void startGame() {
@@ -61,6 +59,7 @@ public class Game {
                 return;
             }
 
+            System.out.println("Attempts left: " + attempt);
             hangman.printHangman();
             System.out.println("Enter a letter: ");
             checkLetter(scanner.nextLine());
@@ -90,7 +89,7 @@ public class Game {
             printWord(letter);
         } else {
             attempt--;
-            System.out.println("There is no such letter. Attempts left: " + attempt);
+            System.out.println("There is no such letter.");
 
             updateHangmanState();
 
@@ -135,7 +134,6 @@ public class Game {
         }
 
         System.out.println(currentWord);
-        System.out.println("Attempts left: " + attempt);
     }
 
     private boolean isGameOver() {
