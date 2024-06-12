@@ -49,10 +49,9 @@ public class Game {
         currentWordState = new StringBuilder("*".repeat(word.length()));
         attempt = 6;
         enteredLetters = new StringBuilder();
-        String letter;
         hangman.setCurrentStep(HangmanStep.STEP_START);
 
-        System.out.println("Word is " + currentWordState);
+        printCurrentWordState();
 
         while (isGameOver()) {
 
@@ -65,9 +64,7 @@ public class Game {
             hangman.printHangman();
             System.out.println("Enter a letter: ");
 
-            letter = scanner.nextLine();
-            checkLetter(letter);
-            enteredLetters.append(letter);
+            checkLetter(scanner.nextLine());
         }
 
         hangman.printHangman();
@@ -80,7 +77,7 @@ public class Game {
 
     private void checkLetter(String letter) {
 
-        if (!letter.matches("[а-яё]") || letter.isEmpty()) {
+        if (!letter.matches("[а-яё]")) {
             System.out.println("Please enter a lowercase Russian letter");
             return;
         }
@@ -100,6 +97,8 @@ public class Game {
             attempt--;
             hangman.updateHangmanState(attempt);
         }
+
+        enteredLetters.append(letter);
     }
 
     private void printWord(String letter) {
@@ -119,7 +118,7 @@ public class Game {
     }
 
     private void printCurrentWordState() {
-        System.out.println(currentWordState);
+        System.out.println("Word is: " + currentWordState);
     }
 
     private boolean isGameOver() {
