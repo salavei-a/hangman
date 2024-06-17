@@ -4,7 +4,9 @@ import java.util.Scanner;
 
 public class Game {
 
-    private final Scanner scanner;
+    private static final Game INSTANCE = new Game();
+    private static final Scanner SCANNER = new Scanner(System.in);
+
     private final Hangman hangman;
     private final Vocabulary vocabulary;
     private String word;
@@ -15,23 +17,18 @@ public class Game {
     private Game() {
         this.vocabulary = Vocabulary.getInstance();
         this.hangman = Hangman.getInstance();
-        this.scanner = new Scanner(System.in);
     }
 
-    public String getWord() {
-        return word;
+    public static void createGame() {
+        INSTANCE.startGame();
     }
 
-    public static Game createGame() {
-        return new Game();
-    }
-
-    public void startGame() {
+    private void startGame() {
         String button;
 
         do {
             System.out.println("Press to start a [N]ew game or e[X]it:");
-            button = scanner.nextLine();
+            button = SCANNER.nextLine();
 
             if (button.equalsIgnoreCase("N")) {
                 playGame();
@@ -64,11 +61,11 @@ public class Game {
             hangman.printHangman();
             System.out.println("Enter a letter: ");
 
-            checkLetter(scanner.nextLine());
+            checkLetter(SCANNER.nextLine());
         }
 
         hangman.printHangman();
-        System.out.println("Unfortunately you lost, try again \nWord is " + getWord() + "\n");
+        System.out.println("Unfortunately you lost, try again \nWord is " + word + "\n");
     }
 
     private void exitGame() {
