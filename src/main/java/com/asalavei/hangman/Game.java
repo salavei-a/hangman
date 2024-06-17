@@ -85,6 +85,11 @@ public class Game {
         if (enteredLetters.indexOf(letter) != -1) {
             printCurrentWordState();
             System.out.println("The letter \"" + letter + "\" has already been entered, please enter another letter");
+
+            if (word.contains(letter)) {
+                attempt--;
+            }
+
             return;
         }
 
