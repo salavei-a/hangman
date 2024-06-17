@@ -107,15 +107,10 @@ public class Game {
     }
 
     private void printWord(String letter) {
-        StringBuilder previousWordState = new StringBuilder(currentWordState);
-        currentWordState = new StringBuilder();
-
         for (int i = 0; i < word.length(); i++) {
 
             if (word.charAt(i) == letter.charAt(0)) {
-                currentWordState.append(word.charAt(i));
-            } else {
-                currentWordState.append(previousWordState.charAt(i));
+                currentWordState.setCharAt(i, word.charAt(i));
             }
         }
 
