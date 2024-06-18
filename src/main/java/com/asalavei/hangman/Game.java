@@ -70,6 +70,8 @@ public class Game {
 
     private void exitGame() {
         System.out.println("Exit the game");
+        SCANNER.close();
+        System.exit(0);
     }
 
     private void checkLetter(String letter) {
