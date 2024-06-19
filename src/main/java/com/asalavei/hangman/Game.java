@@ -40,12 +40,7 @@ public class Game {
     }
 
     private void playGame() {
-        word = vocabulary.getNextWord();
-        currentWordState = new StringBuilder("*".repeat(word.length()));
-        attempt = 6;
-        enteredLetters = new StringBuilder();
-        hangman.setCurrentStep(HangmanStep.STEP_START);
-
+        initializeGame();
         printCurrentWordState();
 
         while (isGameOver()) {
@@ -64,6 +59,14 @@ public class Game {
 
         hangman.printHangman();
         System.out.println("Unfortunately you lost, try again \nWord is " + word + "\n");
+    }
+
+    private void initializeGame() {
+        word = vocabulary.getNextWord();
+        currentWordState = new StringBuilder("*".repeat(word.length()));
+        enteredLetters = new StringBuilder();
+        attempt = 6;
+        hangman.setCurrentStep(HangmanStep.STEP_START);
     }
 
     private void checkLetter(String letter) {
