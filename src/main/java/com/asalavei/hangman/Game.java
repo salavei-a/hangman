@@ -1,10 +1,12 @@
 package com.asalavei.hangman;
 
+import com.asalavei.hangman.vocabulary.Vocabulary;
+import com.asalavei.hangman.vocabulary.VocabularyFactory;
+
 import java.util.Scanner;
 
 public class Game {
 
-    private static final Game INSTANCE = new Game();
     private static final Scanner SCANNER = new Scanner(System.in);
 
     private final Hangman hangman;
@@ -14,16 +16,12 @@ public class Game {
     private StringBuilder currentWordState;
     private StringBuilder enteredLetters;
 
-    private Game() {
-        this.vocabulary = Vocabulary.getInstance();
+    public Game(VocabularyFactory vocabularyFactory) {
+        this.vocabulary = vocabularyFactory.createVocabulary();
         this.hangman = Hangman.getInstance();
     }
 
-    public static void createGame() {
-        INSTANCE.startGame();
-    }
-
-    private void startGame() {
+    public void startGame() {
         String button;
 
         do {
@@ -66,12 +64,6 @@ public class Game {
 
         hangman.printHangman();
         System.out.println("Unfortunately you lost, try again \nWord is " + word + "\n");
-    }
-
-    private void exitGame() {
-        System.out.println("Exit the game");
-        SCANNER.close();
-        System.exit(0);
     }
 
     private void checkLetter(String letter) {
@@ -122,6 +114,12 @@ public class Game {
 
     private boolean isGameOver() {
         return attempt > 0;
+    }
+
+    private void exitGame() {
+        System.out.println("Exit the game");
+        SCANNER.close();
+        System.exit(0);
     }
 
 }
