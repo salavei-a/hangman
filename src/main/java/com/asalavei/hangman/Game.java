@@ -1,5 +1,6 @@
 package com.asalavei.hangman;
 
+import com.asalavei.hangman.vocabulary.Language;
 import com.asalavei.hangman.vocabulary.Vocabulary;
 import com.asalavei.hangman.vocabulary.VocabularyFactory;
 
@@ -11,14 +12,16 @@ public class Game {
 
     private final Hangman hangman;
     private final Vocabulary vocabulary;
+    private final Language language;
     private String word;
     private int attempt;
     private StringBuilder currentWordState;
     private StringBuilder enteredLetters;
 
-    public Game(VocabularyFactory vocabularyFactory) {
+    public Game(VocabularyFactory vocabularyFactory, Language language) {
         this.vocabulary = vocabularyFactory.createVocabulary();
         this.hangman = Hangman.getInstance();
+        this.language = language;
     }
 
     public void startGame() {
@@ -69,10 +72,14 @@ public class Game {
         hangman.setCurrentStep(HangmanStep.STEP_START);
     }
 
+    private void printCurrentWordState() {
+        System.out.println("Word is: " + currentWordState);
+    }
+
     private void checkLetter(String letter) {
 
-        if (!letter.matches("[а-яё]")) {
-            System.out.println("Please enter a lowercase Russian letter");
+        if (!letter.matches(language.getRegex())) {
+            System.out.println("Please enter a lowercase " + language.getName() + " letter");
             return;
         }
 
@@ -109,10 +116,6 @@ public class Game {
         }
 
         printCurrentWordState();
-    }
-
-    private void printCurrentWordState() {
-        System.out.println("Word is: " + currentWordState);
     }
 
     private boolean isGameOver() {
