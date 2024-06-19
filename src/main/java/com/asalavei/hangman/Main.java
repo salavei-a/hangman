@@ -5,19 +5,20 @@ import com.asalavei.hangman.vocabulary.*;
 public class Main {
     public static void main(String[] args) {
         VocabularyFactory vocabularyFactory;
-        Language vocabularyLanguage;
+        VocabularyLanguage vocabularyLanguage;
 
         String selectedVocabularyLanguage = "russian";
 
         if ("russian".equals(selectedVocabularyLanguage)) {
             vocabularyFactory = new RussianVocabularyFactory();
-            vocabularyLanguage = Language.RUSSIAN;
+            vocabularyLanguage = VocabularyLanguage.RUSSIAN;
         } else {
             vocabularyFactory = new EnglishVocabularyFactory();
-            vocabularyLanguage = Language.ENGLISH;
+            vocabularyLanguage = VocabularyLanguage.ENGLISH;
         }
 
-        Game game = new Game(vocabularyFactory, vocabularyLanguage);
+        GameFactory gameFactory = new GameFactory();
+        Game game = gameFactory.createGame(vocabularyFactory, vocabularyLanguage);
         game.startGame();
     }
 }

@@ -1,6 +1,6 @@
 package com.asalavei.hangman;
 
-import com.asalavei.hangman.vocabulary.Language;
+import com.asalavei.hangman.vocabulary.VocabularyLanguage;
 import com.asalavei.hangman.vocabulary.Vocabulary;
 import com.asalavei.hangman.vocabulary.VocabularyFactory;
 
@@ -12,16 +12,16 @@ public class Game {
 
     private final Hangman hangman;
     private final Vocabulary vocabulary;
-    private final Language language;
+    private final VocabularyLanguage vocabularyLanguage;
     private String word;
     private int attempt;
     private StringBuilder currentWordState;
     private StringBuilder enteredLetters;
 
-    public Game(VocabularyFactory vocabularyFactory, Language language) {
+    public Game(VocabularyFactory vocabularyFactory, Hangman hangman, VocabularyLanguage vocabularyLanguage) {
         this.vocabulary = vocabularyFactory.createVocabulary();
-        this.hangman = Hangman.getInstance();
-        this.language = language;
+        this.hangman = hangman;
+        this.vocabularyLanguage = vocabularyLanguage;
     }
 
     public void startGame() {
@@ -78,8 +78,8 @@ public class Game {
 
     private void checkLetter(String letter) {
 
-        if (!letter.matches(language.getRegex())) {
-            System.out.println("Please enter a lowercase " + language.getName() + " letter");
+        if (!letter.matches(vocabularyLanguage.getRegex())) {
+            System.out.println("Please enter a lowercase " + vocabularyLanguage.getName() + " letter");
             return;
         }
 
