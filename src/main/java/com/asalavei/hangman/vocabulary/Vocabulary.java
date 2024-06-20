@@ -21,6 +21,7 @@ public abstract class Vocabulary {
 
     private List<String> loadVocabulary(String filePath) {
         List<String> list = new ArrayList<>();
+
         try (InputStream inputStream = this.getClass().getResourceAsStream(filePath);
              Scanner scanner = new Scanner(inputStream)) {
 
