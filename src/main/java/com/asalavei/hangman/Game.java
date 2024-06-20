@@ -4,7 +4,9 @@ import com.asalavei.hangman.vocabulary.VocabularyLanguage;
 import com.asalavei.hangman.vocabulary.Vocabulary;
 import com.asalavei.hangman.vocabulary.VocabularyFactory;
 
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 
 public class Game {
 
@@ -15,8 +17,8 @@ public class Game {
     private final VocabularyLanguage vocabularyLanguage;
     private String word;
     private int attemptsLeft;
-    private StringBuilder currentWord;
-    private StringBuilder enteredLetters;
+    private StringBuilder guessedWordState;
+    private Set<String> enteredLetters;
     private int guessedLettersCount;
 
     public Game(VocabularyFactory vocabularyFactory, Hangman hangman, VocabularyLanguage vocabularyLanguage) {
@@ -66,15 +68,15 @@ public class Game {
 
     private void setupNewGame() {
         word = vocabulary.getNextWord();
-        currentWord = new StringBuilder("_".repeat(word.length()));
-        enteredLetters = new StringBuilder();
+        guessedWordState = new StringBuilder("_".repeat(word.length()));
+        enteredLetters = new HashSet<>();
         attemptsLeft = 6;
         guessedLettersCount = 0;
         hangman.setCurrentStep(HangmanStep.STEP_START);
     }
 
     private void printCurrentWordState() {
-        System.out.println("Word is: " + currentWord);
+        System.out.println("Word is: " + guessedWordState);
     }
 
     private void processGuessedLetter(String letter) {
@@ -83,7 +85,7 @@ public class Game {
             return;
         }
 
-        if (enteredLetters.indexOf(letter) != -1) {
+        if (!enteredLetters.add(letter)) {
             printCurrentWordState();
             System.out.println("The letter \"" + letter + "\" has already been entered, please enter another letter");
 
@@ -95,7 +97,7 @@ public class Game {
         }
 
         if (word.contains(letter)) {
-            updateCurrentWord(letter);
+            updateGuessedWordState(letter);
             printCurrentWordState();
         } else {
             System.out.println("There is no such letter");
@@ -104,14 +106,12 @@ public class Game {
             attemptsLeft--;
             hangman.updateHangmanState(attemptsLeft);
         }
-
-        enteredLetters.append(letter);
     }
 
-    private void updateCurrentWord(String letter) {
+    private void updateGuessedWordState(String letter) {
         for (int i = 0; i < word.length(); i++) {
             if (word.charAt(i) == letter.charAt(0)) {
-                currentWord.setCharAt(i, word.charAt(i));
+                guessedWordState.setCharAt(i, word.charAt(i));
                 guessedLettersCount++;
             }
         }
