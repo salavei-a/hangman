@@ -37,4 +37,30 @@ public abstract class Vocabulary {
         return list;
     }
 
+    public static VocabularyLanguage getVocabularyLanguage(Scanner scanner) {
+        VocabularyLanguage vocabularyLanguage = null;
+
+        printSelectVocabularyLanguage();
+
+        do {
+            String button = scanner.nextLine();
+
+            if (button.equalsIgnoreCase("R")) {
+                vocabularyLanguage = VocabularyLanguage.RUSSIAN;
+            } else if (button.equalsIgnoreCase("E")) {
+                vocabularyLanguage = VocabularyLanguage.ENGLISH;
+            } else
+                printSelectVocabularyLanguage();
+
+        } while (vocabularyLanguage == null);
+
+        System.out.println("Selected " + vocabularyLanguage.getName() + " vocabulary language.");
+
+        return vocabularyLanguage;
+    }
+
+    private static void printSelectVocabularyLanguage() {
+        System.out.println("Select vocabulary language. Press for [R]ussian or [E]nglish language:");
+    }
+
 }

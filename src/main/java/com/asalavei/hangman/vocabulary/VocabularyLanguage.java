@@ -1,7 +1,8 @@
 package com.asalavei.hangman.vocabulary;
 
 public enum VocabularyLanguage {
-    RUSSIAN("[а-яё]", "Russian"), ENGLISH("[a-z]", "English");
+    RUSSIAN("[а-яё]", "Russian"),
+    ENGLISH("[a-z]", "English");
 
     private final String regex;
     private final String name;
@@ -18,4 +19,5 @@ public enum VocabularyLanguage {
     public String getName() {
         return name;
     }
+
 }

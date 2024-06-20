@@ -1,8 +1,6 @@
 package com.asalavei.hangman;
 
-import com.asalavei.hangman.vocabulary.VocabularyLanguage;
-import com.asalavei.hangman.vocabulary.Vocabulary;
-import com.asalavei.hangman.vocabulary.VocabularyFactory;
+import com.asalavei.hangman.vocabulary.*;
 
 import java.util.HashSet;
 import java.util.Scanner;
@@ -10,39 +8,52 @@ import java.util.Set;
 
 public class Game {
 
-    private static final Scanner SCANNER = new Scanner(System.in);
-
+    private final Scanner scanner;
     private final Hangman hangman;
-    private final Vocabulary vocabulary;
-    private final VocabularyLanguage vocabularyLanguage;
+    private final VocabularyFactory vocabularyFactory;
+    private Vocabulary vocabulary;
+    private VocabularyLanguage vocabularyLanguage;
     private String word;
     private int attemptsLeft;
     private StringBuilder guessedWordState;
     private Set<String> enteredLetters;
     private int guessedLettersCount;
 
-    public Game(VocabularyFactory vocabularyFactory, Hangman hangman, VocabularyLanguage vocabularyLanguage) {
-        this.vocabulary = vocabularyFactory.createVocabulary();
+    public Game(VocabularyFactory vocabularyFactory, Hangman hangman, VocabularyLanguage vocabularyLanguage, Scanner scanner) {
+        this.vocabularyFactory = vocabularyFactory;
+        this.vocabulary = vocabularyFactory.createVocabulary(vocabularyLanguage);
         this.hangman = hangman;
         this.vocabularyLanguage = vocabularyLanguage;
+        this.scanner = scanner;
     }
 
     public void startGame() {
         String button;
 
         do {
-            System.out.println("Press to start a [N]ew game or e[X]it:");
-            button = SCANNER.nextLine();
+            System.out.println("Press to start a [N]ew game, [C]hange vocabulary language or e[X]it:");
+            button = scanner.nextLine();
 
             if (button.equalsIgnoreCase("N")) {
                 playGame();
 
+            } else if (button.equalsIgnoreCase("C")) {
+                changeVocabularyLanguage();
             } else if (button.equalsIgnoreCase("X")) {
                 exitGame();
                 return;
             }
 
         } while (!button.equalsIgnoreCase("X"));
+    }
+
+    private void changeVocabularyLanguage() {
+        vocabularyLanguage = (vocabularyLanguage == VocabularyLanguage.RUSSIAN)
+                ? VocabularyLanguage.ENGLISH
+                : VocabularyLanguage.RUSSIAN;
+        vocabulary = vocabularyFactory.createVocabulary(vocabularyLanguage);
+
+        System.out.println("Selected " + vocabularyLanguage.getName() + " vocabulary language.");
     }
 
     private void playGame() {
@@ -59,7 +70,7 @@ public class Game {
             hangman.printHangman();
             System.out.println("Enter a letter: ");
 
-            processGuessedLetter(SCANNER.nextLine());
+            processGuessedLetter(scanner.nextLine());
         }
 
         hangman.printHangman();
@@ -123,7 +134,7 @@ public class Game {
 
     private void exitGame() {
         System.out.println("Exit the game");
-        SCANNER.close();
+        scanner.close();
         System.exit(0);
     }
 

@@ -1,18 +1,14 @@
 package com.asalavei.hangman;
 
-import com.asalavei.hangman.vocabulary.EnglishVocabularyFactory;
-import com.asalavei.hangman.vocabulary.RussianVocabularyFactory;
+import com.asalavei.hangman.vocabulary.UniversalVocabularyFactory;
 import com.asalavei.hangman.vocabulary.VocabularyLanguage;
-import com.asalavei.hangman.vocabulary.VocabularyFactory;
+
+import java.util.Scanner;
 
 public class GameFactory {
 
-    public Game createGame(VocabularyLanguage vocabularyLanguage) {
-        VocabularyFactory vocabularyFactory = switch (vocabularyLanguage) {
-            case RUSSIAN -> new RussianVocabularyFactory();
-            case ENGLISH -> new EnglishVocabularyFactory();
-        };
-
-        return new Game(vocabularyFactory, new Hangman(), vocabularyLanguage);
+    public Game createGame(VocabularyLanguage vocabularyLanguage, Scanner scanner) {
+        return new Game(new UniversalVocabularyFactory(), new Hangman(), vocabularyLanguage, scanner);
     }
+
 }
