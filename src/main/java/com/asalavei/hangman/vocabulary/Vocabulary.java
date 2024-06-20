@@ -37,7 +37,7 @@ public abstract class Vocabulary {
         return list;
     }
 
-    public static VocabularyLanguage getVocabularyLanguage(Scanner scanner) {
+    public static VocabularyLanguage selectVocabularyLanguage(Scanner scanner) {
         VocabularyLanguage vocabularyLanguage = null;
 
         printSelectVocabularyLanguage();

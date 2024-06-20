@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        VocabularyLanguage vocabularyLanguage = Vocabulary.getVocabularyLanguage(scanner);
+        VocabularyLanguage vocabularyLanguage = Vocabulary.selectVocabularyLanguage(scanner);
         Game game = new GameFactory().createGame(vocabularyLanguage, scanner);
         game.startGame();
     }
