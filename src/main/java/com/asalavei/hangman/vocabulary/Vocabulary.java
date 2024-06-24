@@ -7,8 +7,8 @@ import java.util.Random;
 import java.util.Scanner;
 
 public abstract class Vocabulary {
-
     private static final Random RANDOM = new Random();
+
     private final List<String> vocabularyList;
 
     protected Vocabulary(String filePath) {
@@ -62,5 +62,4 @@ public abstract class Vocabulary {
     private static void printSelectVocabularyLanguage() {
         System.out.println("Select vocabulary language. Press for [R]ussian or [E]nglish language:");
     }
-
 }

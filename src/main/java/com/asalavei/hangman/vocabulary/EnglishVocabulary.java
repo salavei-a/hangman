@@ -1,7 +1,6 @@
 package com.asalavei.hangman.vocabulary;
 
 public class EnglishVocabulary extends Vocabulary {
-
     private static final EnglishVocabulary INSTANCE = new EnglishVocabulary();
 
     private EnglishVocabulary() {
@@ -11,5 +10,4 @@ public class EnglishVocabulary extends Vocabulary {
     protected static EnglishVocabulary getInstance() {
         return INSTANCE;
     }
-
 }

@@ -1,7 +1,6 @@
 package com.asalavei.hangman;
 
 public class Hangman {
-
     private HangmanStep currentStep;
 
     public void setCurrentStep(HangmanStep currentStep) {

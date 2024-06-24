@@ -1,7 +1,6 @@
 package com.asalavei.hangman.vocabulary;
 
 public class RussianVocabulary extends Vocabulary {
-
     private static final RussianVocabulary INSTANCE = new RussianVocabulary();
 
     private RussianVocabulary() {
@@ -11,5 +10,4 @@ public class RussianVocabulary extends Vocabulary {
     protected static RussianVocabulary getInstance() {
         return INSTANCE;
     }
-
 }

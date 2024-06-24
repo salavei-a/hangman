@@ -19,5 +19,4 @@ public enum VocabularyLanguage {
     public String getName() {
         return name;
     }
-
 }

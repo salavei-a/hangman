@@ -7,16 +7,15 @@ import java.util.Scanner;
 import java.util.Set;
 
 public class Game {
-
     private final Scanner scanner;
     private final Hangman hangman;
     private final VocabularyFactory vocabularyFactory;
     private Vocabulary vocabulary;
     private VocabularyLanguage vocabularyLanguage;
     private String word;
-    private int attemptsLeft;
     private StringBuilder guessedWordState;
     private Set<String> enteredLetters;
+    private int attemptsLeft;
     private int guessedLettersCount;
 
     public Game(VocabularyFactory vocabularyFactory, Hangman hangman, VocabularyLanguage vocabularyLanguage, Scanner scanner) {
@@ -137,5 +136,4 @@ public class Game {
         scanner.close();
         System.exit(0);
     }
-
 }

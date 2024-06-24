@@ -1,7 +1,6 @@
 package com.asalavei.hangman.vocabulary;
 
-public class UniversalVocabularyFactory implements VocabularyFactory{
-
+public class UniversalVocabularyFactory implements VocabularyFactory {
     @Override
     public Vocabulary createVocabulary(VocabularyLanguage vocabularyLanguage) {
         return switch (vocabularyLanguage) {
@@ -9,5 +8,4 @@ public class UniversalVocabularyFactory implements VocabularyFactory{
             case ENGLISH -> EnglishVocabulary.getInstance();
         };
     }
-
 }
