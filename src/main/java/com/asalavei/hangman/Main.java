@@ -10,7 +10,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         VocabularyLanguage vocabularyLanguage = Vocabulary.selectVocabularyLanguage(scanner);
 
-        Game game = new GameFactory().createGame(vocabularyLanguage, scanner);
+        Game game = GameFactory.createGame(vocabularyLanguage, scanner);
         game.startGame();
     }
 }
