@@ -8,8 +8,8 @@ import java.util.Set;
 
 public class Game {
     private final Scanner scanner;
-    private final Hangman hangman;
-    private final VocabularyFactory vocabularyFactory;
+    private final IHangman hangman;
+    private final IVocabularyFactory vocabularyFactory;
     private Vocabulary vocabulary;
     private VocabularyLanguage vocabularyLanguage;
     private String word;
@@ -18,7 +18,7 @@ public class Game {
     private int attemptsLeft;
     private int guessedLettersCount;
 
-    public Game(VocabularyFactory vocabularyFactory, Hangman hangman, VocabularyLanguage vocabularyLanguage, Scanner scanner) {
+    public Game(IVocabularyFactory vocabularyFactory, IHangman hangman, VocabularyLanguage vocabularyLanguage, Scanner scanner) {
         this.vocabularyFactory = vocabularyFactory;
         this.vocabulary = vocabularyFactory.createVocabulary(vocabularyLanguage);
         this.hangman = hangman;
