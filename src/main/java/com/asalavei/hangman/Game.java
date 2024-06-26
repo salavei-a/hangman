@@ -13,10 +13,9 @@ public class Game {
     private Vocabulary vocabulary;
     private VocabularyLanguage vocabularyLanguage;
     private String word;
-    private StringBuilder guessedWordState;
+    private StringBuilder maskedWord;
     private Set<String> enteredLetters;
     private int attemptsLeft;
-    private int guessedLettersCount;
 
     public Game(IVocabularyFactory vocabularyFactory, IHangman hangman, VocabularyLanguage vocabularyLanguage, Scanner scanner) {
         this.vocabularyFactory = vocabularyFactory;
@@ -60,7 +59,7 @@ public class Game {
         printCurrentWordState();
 
         while (isGameActive()) {
-            if (guessedLettersCount == word.length()) {
+            if (word.equals(maskedWord.toString())) {
                 System.out.println("Congratulations! You won\n");
                 return;
             }
@@ -78,15 +77,14 @@ public class Game {
 
     private void setupNewGame() {
         word = vocabulary.getNextWord();
-        guessedWordState = new StringBuilder("_".repeat(word.length()));
+        maskedWord = new StringBuilder("_".repeat(word.length()));
         enteredLetters = new HashSet<>();
         attemptsLeft = 6;
-        guessedLettersCount = 0;
         hangman.setCurrentStep(HangmanStep.STEP_START);
     }
 
     private void printCurrentWordState() {
-        System.out.println("Word is: " + guessedWordState);
+        System.out.println("Word is: " + maskedWord);
     }
 
     private void processGuessedLetter(String letter) {
@@ -107,7 +105,7 @@ public class Game {
         }
 
         if (word.contains(letter)) {
-            updateGuessedWordState(letter);
+            updateMaskedWord(letter);
             printCurrentWordState();
         } else {
             System.out.println("There is no such letter");
@@ -118,11 +116,10 @@ public class Game {
         }
     }
 
-    private void updateGuessedWordState(String letter) {
+    private void updateMaskedWord(String letter) {
         for (int i = 0; i < word.length(); i++) {
             if (word.charAt(i) == letter.charAt(0)) {
-                guessedWordState.setCharAt(i, word.charAt(i));
-                guessedLettersCount++;
+                maskedWord.setCharAt(i, word.charAt(i));
             }
         }
     }
