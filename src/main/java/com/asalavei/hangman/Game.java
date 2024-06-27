@@ -8,16 +8,16 @@ import java.util.Set;
 
 public class Game {
     private final Scanner scanner;
-    private final IHangman hangman;
-    private final IVocabularyFactory vocabularyFactory;
+    private final Hangman hangman;
+    private final VocabularyFactory vocabularyFactory;
     private Vocabulary vocabulary;
     private VocabularyLanguage vocabularyLanguage;
     private String word;
     private StringBuilder maskedWord;
     private Set<String> enteredLetters;
-    private int attemptsLeft;
+    private int mistakes;
 
-    public Game(IVocabularyFactory vocabularyFactory, IHangman hangman, VocabularyLanguage vocabularyLanguage, Scanner scanner) {
+    public Game(VocabularyFactory vocabularyFactory, Hangman hangman, VocabularyLanguage vocabularyLanguage, Scanner scanner) {
         this.vocabularyFactory = vocabularyFactory;
         this.vocabulary = vocabularyFactory.createVocabulary(vocabularyLanguage);
         this.hangman = hangman;
@@ -56,7 +56,7 @@ public class Game {
 
     private void playGame() {
         setupNewGame();
-        printCurrentWordState();
+        printMaskedWord();
 
         while (isGameActive()) {
             if (word.equals(maskedWord.toString())) {
@@ -64,14 +64,14 @@ public class Game {
                 return;
             }
 
-            System.out.println("Attempts left: " + attemptsLeft);
-            hangman.printHangman();
+            System.out.println("Number of mistakes: " + mistakes);
+            hangman.print();
             System.out.println("Enter a letter: ");
 
             processGuessedLetter(scanner.nextLine());
         }
 
-        hangman.printHangman();
+        hangman.print();
         System.out.println("Unfortunately you lost, try again \nWord is " + word + "\n");
     }
 
@@ -79,11 +79,11 @@ public class Game {
         word = vocabulary.getNextWord();
         maskedWord = new StringBuilder("_".repeat(word.length()));
         enteredLetters = new HashSet<>();
-        attemptsLeft = 6;
-        hangman.setCurrentStep(HangmanStep.STEP_START);
+        mistakes = 0;
+        hangman.updateImage(mistakes);
     }
 
-    private void printCurrentWordState() {
+    private void printMaskedWord() {
         System.out.println("Word is: " + maskedWord);
     }
 
@@ -94,11 +94,11 @@ public class Game {
         }
 
         if (!enteredLetters.add(letter)) {
-            printCurrentWordState();
+            printMaskedWord();
             System.out.println("The letter \"" + letter + "\" has already been entered, please enter another letter");
 
             if (word.contains(letter)) {
-                attemptsLeft--;
+                mistakes++;
             }
 
             return;
@@ -106,13 +106,13 @@ public class Game {
 
         if (word.contains(letter)) {
             updateMaskedWord(letter);
-            printCurrentWordState();
+            printMaskedWord();
         } else {
             System.out.println("There is no such letter");
-            printCurrentWordState();
+            printMaskedWord();
 
-            attemptsLeft--;
-            hangman.updateHangmanState(attemptsLeft);
+            mistakes++;
+            hangman.updateImage(mistakes);
         }
     }
 
@@ -125,7 +125,7 @@ public class Game {
     }
 
     private boolean isGameActive() {
-        return attemptsLeft > 0;
+        return mistakes != 6;
     }
 
     private void exitGame() {

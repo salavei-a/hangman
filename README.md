@@ -14,7 +14,7 @@ encapsulated in different classes to maintain a clean and modular design.
     - Enter "C" to change the vocabulary language.
     - Enter "X" to exit the game.
 3. If you start a new game, you will be prompted to guess letters to reveal the hidden word.
-4. The game will display the Hangman drawing and the number of attempts left.
+4. The game will display the Hangman drawing and the number of mistakes.
 5. Continue guessing letters until you either guess the word correctly or run out of attempts.
 
 ## Contributing
