@@ -12,8 +12,7 @@ public class Game {
     private final VocabularyFactory vocabularyFactory;
     private Vocabulary vocabulary;
     private VocabularyLanguage vocabularyLanguage;
-    private String word;
-    private StringBuilder maskedWord;
+    private MaskedWord word;
     private Set<String> enteredLetters;
 
     public Game(VocabularyFactory vocabularyFactory, Hangman hangman, VocabularyLanguage vocabularyLanguage, Scanner scanner) {
@@ -57,10 +56,10 @@ public class Game {
         HangmanRender hangmanRender = new DefaultHangmanRender();
 
         setupNewGame();
-        printMaskedWord();
+        word.printMask();
 
         while (isGameActive()) {
-            if (word.equals(maskedWord.toString())) {
+            if (word.matches()) {
                 System.out.println("Congratulations! You won\n");
                 return;
             }
@@ -73,19 +72,15 @@ public class Game {
         }
 
         hangmanRender.print(hangman.getStep());
-        System.out.println("Unfortunately you lost, try again \nWord is " + word + "\n");
+        System.out.println("Unfortunately you lost, try again \nWord is " + word.getSecretWord() + "\n");
     }
 
     private void setupNewGame() {
-        word = vocabulary.getNextWord();
-        maskedWord = new StringBuilder("_".repeat(word.length()));
+        word = new MaskedWord(vocabulary.getNextWord());
         enteredLetters = new HashSet<>();
         hangman.refreshStep();
     }
 
-    private void printMaskedWord() {
-        System.out.println("Word is: " + maskedWord);
-    }
 
     private void inputLetterChecker(String letter) {
         if (isCorrectLetter(letter)) {
@@ -94,31 +89,23 @@ public class Game {
         }
 
         if (!enteredLetters.add(letter)) {
-            printMaskedWord();
+            word.printMask();
             System.out.println("The letter \"" + letter + "\" has already been entered, please enter another letter");
             return;
         }
 
-        if (word.contains(letter)) {
-            updateMaskedWord(letter);
-            printMaskedWord();
+        if (word.containsLetter(letter)) {
+            word.updateMask(letter);
+            word.printMask();
         } else {
             System.out.println("There is no such letter");
-            printMaskedWord();
+            word.printMask();
             hangman.increaseStep();
         }
     }
 
     private boolean isCorrectLetter(String letter) {
         return !letter.matches(vocabularyLanguage.getRegex());
-    }
-
-    private void updateMaskedWord(String letter) {
-        for (int i = 0; i < word.length(); i++) {
-            if (word.charAt(i) == letter.charAt(0)) {
-                maskedWord.setCharAt(i, word.charAt(i));
-            }
-        }
     }
 
     private void printMistakes() {
