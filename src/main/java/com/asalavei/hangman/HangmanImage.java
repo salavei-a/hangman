@@ -15,7 +15,8 @@ public enum HangmanImage {
         this.image = image;
     }
 
-    public String getImage() {
+    @Override
+    public String toString() {
         return image;
     }
 }

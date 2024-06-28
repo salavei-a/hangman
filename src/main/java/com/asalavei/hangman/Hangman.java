@@ -1,9 +1,17 @@
 package com.asalavei.hangman;
 
-public interface Hangman {
-    void setHangmanImage(HangmanImage currentImage);
+public class Hangman {
+    private int step;
 
-    void print();
+    public int getStep() {
+        return step;
+    }
 
-    void updateImage(int mistakes);
+    public void increaseStep() {
+        step++;
+    }
+
+    public void refreshStep() {
+        step = 0;
+    }
 }
