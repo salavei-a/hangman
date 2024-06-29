@@ -14,8 +14,8 @@ public class Game {
     private final Scanner scanner;
     private final Hangman hangman;
     private final VocabularyFactory vocabularyFactory;
-    private Vocabulary vocabulary;
     private VocabularyLanguage vocabularyLanguage;
+    private Vocabulary vocabulary;
     private MaskedWord word;
     private Set<String> enteredLetters;
 
@@ -41,7 +41,7 @@ public class Game {
                 playGame();
 
             } else if (input.equalsIgnoreCase(COMMAND_PLAY_DIF_VOCABULARY_LANG)) {
-                changeVocabularyLanguage();
+                vocabulary = VocabularyLanguageSelector.change(vocabularyLanguage, vocabularyFactory);
                 playGame();
             } else if (input.equalsIgnoreCase(COMMAND_EXIT)) {
                 exitGame();
@@ -49,15 +49,6 @@ public class Game {
             }
 
         } while (!input.equalsIgnoreCase(COMMAND_EXIT));
-    }
-
-    private void changeVocabularyLanguage() {
-        vocabularyLanguage = (vocabularyLanguage == VocabularyLanguage.RUSSIAN)
-                ? VocabularyLanguage.ENGLISH
-                : VocabularyLanguage.RUSSIAN;
-        vocabulary = vocabularyFactory.createVocabulary(vocabularyLanguage);
-
-        System.out.println("Selected " + vocabularyLanguage.getName() + " vocabulary language.");
     }
 
     private void playGame() {
