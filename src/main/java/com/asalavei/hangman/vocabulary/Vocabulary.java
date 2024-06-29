@@ -8,6 +8,8 @@ import java.util.Scanner;
 
 public abstract class Vocabulary {
     private static final Random RANDOM = new Random();
+    private static final int RUSSIAN_VOCABULARY = 1;
+    private static final int ENGLISH_VOCABULARY = 2;
 
     private final List<String> vocabularyList;
 
@@ -38,28 +40,29 @@ public abstract class Vocabulary {
     }
 
     public static VocabularyLanguage selectVocabularyLanguage(Scanner scanner) {
-        VocabularyLanguage vocabularyLanguage = null;
-
         printSelectVocabularyLanguage();
 
-        do {
-            String button = scanner.nextLine();
+        while (true) {
+            String input = scanner.nextLine();
 
-            if (button.equalsIgnoreCase("R")) {
-                vocabularyLanguage = VocabularyLanguage.RUSSIAN;
-            } else if (button.equalsIgnoreCase("E")) {
-                vocabularyLanguage = VocabularyLanguage.ENGLISH;
-            } else
-                printSelectVocabularyLanguage();
+            if (!input.matches("\\d")) {
+                System.out.println("Please enter a number!");
+                continue;
+            }
 
-        } while (vocabularyLanguage == null);
+            Integer vocabularyLanguage = Integer.parseInt(input);
 
-        System.out.println("Selected " + vocabularyLanguage.getName() + " vocabulary language.");
-
-        return vocabularyLanguage;
+            if (vocabularyLanguage.equals(RUSSIAN_VOCABULARY)) {
+                return VocabularyLanguage.RUSSIAN;
+            } else if (vocabularyLanguage.equals(ENGLISH_VOCABULARY)) {
+                return VocabularyLanguage.ENGLISH;
+            } else {
+                System.out.println("Please enter 1 or 2!");
+            }
+        }
     }
 
     private static void printSelectVocabularyLanguage() {
-        System.out.println("Select vocabulary language. Press for [R]ussian or [E]nglish language:");
+        System.out.println("Select vocabulary language (1/2): \n1. Russian\n2. English");
     }
 }

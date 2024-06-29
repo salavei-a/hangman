@@ -7,6 +7,10 @@ import java.util.Scanner;
 import java.util.Set;
 
 public class Game {
+    private static final String COMMAND_PLAY_GAME = "Y";
+    private static final String COMMAND_PLAY_DIF_VOCABULARY_LANG = "L";
+    private static final String COMMAND_EXIT = "N";
+
     private final Scanner scanner;
     private final Hangman hangman;
     private final VocabularyFactory vocabularyFactory;
@@ -24,23 +28,27 @@ public class Game {
     }
 
     public void startGame() {
-        String button;
+        playGame();
+        String input;
 
         do {
-            System.out.println("Press to start a [N]ew game, [C]hange vocabulary language or e[X]it:");
-            button = scanner.nextLine();
+            System.out.println("Want to play another game? [Y/N]");
+            System.out.println("Play with another vocabulary language: [L]");
 
-            if (button.equalsIgnoreCase("N")) {
+            input = scanner.nextLine();
+
+            if (input.equalsIgnoreCase(COMMAND_PLAY_GAME)) {
                 playGame();
 
-            } else if (button.equalsIgnoreCase("C")) {
+            } else if (input.equalsIgnoreCase(COMMAND_PLAY_DIF_VOCABULARY_LANG)) {
                 changeVocabularyLanguage();
-            } else if (button.equalsIgnoreCase("X")) {
+                playGame();
+            } else if (input.equalsIgnoreCase(COMMAND_EXIT)) {
                 exitGame();
                 return;
             }
 
-        } while (!button.equalsIgnoreCase("X"));
+        } while (!input.equalsIgnoreCase(COMMAND_EXIT));
     }
 
     private void changeVocabularyLanguage() {
