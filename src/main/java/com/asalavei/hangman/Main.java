@@ -11,6 +11,6 @@ public class Main {
         VocabularyLanguage vocabularyLanguage = VocabularyLanguageSelector.select(scanner);
 
         Game game = GameFactory.createGame(vocabularyLanguage, scanner);
-        game.startGame();
+        game.start();
     }
 }

@@ -1,13 +1,17 @@
 package com.asalavei.hangman.vocabulary;
 
-public class EnglishVocabulary extends Vocabulary {
-    private static final EnglishVocabulary INSTANCE = new EnglishVocabulary();
+public final class EnglishVocabulary extends SimpleVocabulary {
+    private static EnglishVocabulary INSTANCE;
 
-    private EnglishVocabulary() {
-        super("/vocabulary_english.txt");
+    private EnglishVocabulary(String filePath, VocabularyLanguage language) {
+        super(filePath, language);
     }
 
-    protected static EnglishVocabulary getInstance() {
+    static EnglishVocabulary getInstance(String filePath, VocabularyLanguage language) {
+        if (INSTANCE == null) {
+            INSTANCE = new EnglishVocabulary(filePath, language);
+        }
+
         return INSTANCE;
     }
 }

@@ -33,13 +33,15 @@ public class VocabularyLanguageSelector {
         }
     }
 
-    public static Vocabulary change(VocabularyLanguage vocabularyLanguage, VocabularyFactory vocabularyFactory) {
+    public static Vocabulary change(Vocabulary vocabulary) {
+        VocabularyLanguage vocabularyLanguage = vocabulary.getLanguage();
+
         vocabularyLanguage = (vocabularyLanguage == VocabularyLanguage.RUSSIAN)
                 ? VocabularyLanguage.ENGLISH
                 : VocabularyLanguage.RUSSIAN;
 
         System.out.println("Selected " + vocabularyLanguage.getName() + " vocabulary language.");
 
-        return vocabularyFactory.createVocabulary(vocabularyLanguage);
+        return VocabularyFactory.createVocabulary(vocabularyLanguage);
     }
 }

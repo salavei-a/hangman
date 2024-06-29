@@ -13,16 +13,16 @@ public class MaskedWord {
         return secretWord;
     }
 
+    public StringBuilder getMask() {
+        return mask;
+    }
+
     public void updateMask(String letter) {
         for (int i = 0; i < secretWord.length(); i++) {
             if (secretWord.charAt(i) == letter.charAt(0)) {
                 mask.setCharAt(i, secretWord.charAt(i));
             }
         }
-    }
-
-    public void printMask() {
-        System.out.println("Word is: " + mask);
     }
 
     public boolean containsLetter(String letter) {

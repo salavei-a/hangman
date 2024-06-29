@@ -1,13 +1,17 @@
 package com.asalavei.hangman.vocabulary;
 
-public class RussianVocabulary extends Vocabulary {
-    private static final RussianVocabulary INSTANCE = new RussianVocabulary();
+public final class RussianVocabulary extends SimpleVocabulary {
+    private static RussianVocabulary INSTANCE;
 
-    private RussianVocabulary() {
-        super("/vocabulary_russian.txt");
+    private RussianVocabulary(String filePath, VocabularyLanguage language) {
+        super(filePath, language);
     }
 
-    protected static RussianVocabulary getInstance() {
+    static RussianVocabulary getInstance(String filePath, VocabularyLanguage language) {
+        if (INSTANCE == null) {
+            INSTANCE = new RussianVocabulary(filePath, language);
+        }
+
         return INSTANCE;
     }
 }
