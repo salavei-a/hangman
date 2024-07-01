@@ -61,9 +61,17 @@ public class Game {
 
             printMistakes();
             hangmanRender.print(hangman.getStep());
-            System.out.println("Enter a letter: ");
 
-            inputLetterChecker(scanner.nextLine());
+            String letter = inputLetterChecker();
+
+            if (word.containsLetter(letter)) {
+                word.updateMask(letter);
+                printMask();
+            } else {
+                System.out.println("There is no such letter");
+                printMask();
+                hangman.increaseStep();
+            }
         }
 
         hangmanRender.print(hangman.getStep());
@@ -76,25 +84,22 @@ public class Game {
         hangman.refreshStep();
     }
 
-    private void inputLetterChecker(String letter) {
-        if (isCorrectLetter(letter)) {
-            System.out.println("Please enter a lowercase " + vocabulary.getLanguage().getName() + " letter");
-            return;
-        }
+    private String inputLetterChecker() {
+        while (true) {
+            System.out.println("Enter a letter: ");
+            String letter = scanner.nextLine();
 
-        if (!enteredLetters.add(letter)) {
-            printMask();
-            System.out.println("The letter \"" + letter + "\" has already been entered, please enter another letter");
-            return;
-        }
+            if (isCorrectLetter(letter)) {
+                System.out.println("Please enter a lowercase " + vocabulary.getLanguage().getName() + " letter");
+                continue;
+            }
 
-        if (word.containsLetter(letter)) {
-            word.updateMask(letter);
-            printMask();
-        } else {
-            System.out.println("There is no such letter");
-            printMask();
-            hangman.increaseStep();
+            if (!enteredLetters.add(letter)) {
+                System.out.println("The letter \"" + letter + "\" has already been entered, please enter another letter");
+                continue;
+            }
+
+            return letter;
         }
     }
 
