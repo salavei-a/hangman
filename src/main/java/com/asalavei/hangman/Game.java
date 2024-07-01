@@ -7,62 +7,31 @@ import java.util.Scanner;
 import java.util.Set;
 
 public class Game {
-    private static final String COMMAND_PLAY_GAME = "Y";
-    private static final String COMMAND_PLAY_DIF_VOCABULARY_LANG = "L";
-    private static final String COMMAND_EXIT = "N";
+    private final Vocabulary vocabulary;
+    private final MaskedWord word;
 
-    private final Scanner scanner;
-    private final Hangman hangman;
-    private Vocabulary vocabulary;
-    private MaskedWord word;
-    private Set<String> enteredLetters;
-
-    public Game(Vocabulary vocabulary, Hangman hangman, Scanner scanner) {
+    public Game(Vocabulary vocabulary) {
         this.vocabulary = vocabulary;
-        this.hangman = hangman;
-        this.scanner = scanner;
+        this.word = new MaskedWord(vocabulary.getNextWord());
     }
 
-    public void start() {
-        play();
-        String input;
-
-        do {
-            System.out.println("Want to play another game? [Y/N]");
-            System.out.println("Play with another vocabulary language: [L]");
-
-            input = scanner.nextLine();
-
-            if (input.equalsIgnoreCase(COMMAND_PLAY_GAME)) {
-                play();
-
-            } else if (input.equalsIgnoreCase(COMMAND_PLAY_DIF_VOCABULARY_LANG)) {
-                vocabulary = VocabularyLanguageSelector.change(vocabulary);
-                play();
-            } else if (input.equalsIgnoreCase(COMMAND_EXIT)) {
-                exit();
-                return;
-            }
-
-        } while (!input.equalsIgnoreCase(COMMAND_EXIT));
-    }
-
-    private void play() {
+    protected void runLoop(Scanner scanner) {
+        Hangman hangman = new Hangman();
         HangmanRender hangmanRender = new DefaultHangmanRender();
+        Set<String> enteredLetters = new HashSet<>();
 
-        setup();
         printMask();
 
-        while (isGameActive()) {
+        while (isGameActive(hangman)) {
             if (word.matches()) {
                 System.out.println("Congratulations! You won\n");
                 return;
             }
 
-            printMistakes();
+            printMistakes(hangman);
             hangmanRender.print(hangman.getStep());
 
-            String letter = inputLetterChecker();
+            String letter = inputLetterChecker(enteredLetters, scanner);
 
             if (word.containsLetter(letter)) {
                 word.updateMask(letter);
@@ -78,13 +47,7 @@ public class Game {
         System.out.println("Unfortunately you lost, try again \nWord is " + word.getSecretWord() + "\n");
     }
 
-    private void setup() {
-        word = new MaskedWord(vocabulary.getNextWord());
-        enteredLetters = new HashSet<>();
-        hangman.refreshStep();
-    }
-
-    private String inputLetterChecker() {
+    private String inputLetterChecker(Set<String> enteredLetters, Scanner scanner) {
         while (true) {
             System.out.println("Enter a letter: ");
             String letter = scanner.nextLine();
@@ -103,7 +66,7 @@ public class Game {
         }
     }
 
-    public void printMask() {
+    private void printMask() {
         System.out.println("Word is: " + word.getMask());
     }
 
@@ -111,15 +74,11 @@ public class Game {
         return !letter.matches(vocabulary.getLanguage().getRegex());
     }
 
-    private void printMistakes() {
+    private void printMistakes(Hangman hangman) {
         System.out.println("Number of mistakes: " + hangman.getStep());
     }
 
-    private boolean isGameActive() {
+    private boolean isGameActive(Hangman hangman) {
         return hangman.getStep() != 6;
-    }
-
-    private void exit() {
-        System.out.println("Exit the game");
     }
 }

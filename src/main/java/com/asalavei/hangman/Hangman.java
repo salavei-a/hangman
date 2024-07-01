@@ -10,8 +10,4 @@ public class Hangman {
     public void increaseStep() {
         step++;
     }
-
-    public void refreshStep() {
-        step = 0;
-    }
 }
