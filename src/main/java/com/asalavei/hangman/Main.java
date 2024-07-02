@@ -17,27 +17,11 @@ public class Main {
             Game game = GameFactory.createGame(vocabulary);
             game.runLoop(scanner);
 
-            String answer;
-            do {
-                System.out.println("Want to play another game? [Y/N]");
-                System.out.println("Play with another vocabulary language: [L]");
-
-                answer = scanner.nextLine();
-            } while (!answer.equalsIgnoreCase(PLAY) && !answer.equalsIgnoreCase(PLAY_WITH_DIF_VOCABULARY) && !answer.equalsIgnoreCase(EXIT));
-
-            if (answer.equalsIgnoreCase(PLAY_WITH_DIF_VOCABULARY)) {
-                vocabulary = VocabularyLanguageSelector.change(vocabulary);
-                answer = PLAY;
-            }
-
-            isPlayAgain = answer.equalsIgnoreCase(PLAY);
-
+            NewRoundController newRoundController = new NewRoundController(vocabulary);
+            isPlayAgain = newRoundController.isNewGame(scanner);
+            vocabulary = newRoundController.getVocabulary();
         } while (isPlayAgain);
 
         scanner.close();
     }
-
-    private static final String PLAY = "Y";
-    private static final String EXIT = "N";
-    private static final String PLAY_WITH_DIF_VOCABULARY = "L";
 }
