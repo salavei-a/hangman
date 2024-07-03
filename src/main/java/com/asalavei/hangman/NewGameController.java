@@ -5,14 +5,14 @@ import com.asalavei.hangman.vocabulary.VocabularyLanguageSelector;
 
 import java.util.Scanner;
 
-public class NewRoundController {
+public class NewGameController {
     private static final String PLAY = "Y";
     private static final String EXIT = "N";
     private static final String PLAY_WITH_DIF_VOCABULARY = "L";
 
     private Vocabulary vocabulary;
 
-    public NewRoundController(Vocabulary vocabulary) {
+    public NewGameController(Vocabulary vocabulary) {
         this.vocabulary = vocabulary;
     }
 
@@ -20,7 +20,7 @@ public class NewRoundController {
         return vocabulary;
     }
 
-    protected boolean isNewGame(Scanner scanner) {
+    public boolean isNewGame(Scanner scanner) {
         String answer;
         do {
             System.out.println("Want to play another game? [Y/N]");

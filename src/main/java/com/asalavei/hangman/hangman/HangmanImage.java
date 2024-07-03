@@ -1,4 +1,4 @@
-package com.asalavei.hangman;
+package com.asalavei.hangman.hangman;
 
 public enum HangmanImage {
     IMAGE_START("_____\n |  |\n |\n |\n |\n_|_"),

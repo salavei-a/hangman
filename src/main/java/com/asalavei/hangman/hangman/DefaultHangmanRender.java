@@ -1,4 +1,4 @@
-package com.asalavei.hangman;
+package com.asalavei.hangman.hangman;
 
 public class DefaultHangmanRender implements HangmanRender {
     @Override

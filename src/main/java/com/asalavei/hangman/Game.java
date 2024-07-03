@@ -1,5 +1,8 @@
 package com.asalavei.hangman;
 
+import com.asalavei.hangman.hangman.DefaultHangmanRender;
+import com.asalavei.hangman.hangman.Hangman;
+import com.asalavei.hangman.hangman.HangmanRender;
 import com.asalavei.hangman.vocabulary.*;
 
 import java.util.HashSet;
@@ -15,7 +18,7 @@ public class Game {
         this.word = new MaskedWord(vocabulary.getNextWord());
     }
 
-    protected void runLoop(Scanner scanner) {
+    void runLoop(Scanner scanner) {
         Hangman hangman = new Hangman();
         HangmanRender hangmanRender = new DefaultHangmanRender();
         Set<String> enteredLetters = new HashSet<>();

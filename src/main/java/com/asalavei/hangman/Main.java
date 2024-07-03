@@ -17,9 +17,9 @@ public class Main {
             Game game = GameFactory.createGame(vocabulary);
             game.runLoop(scanner);
 
-            NewRoundController newRoundController = new NewRoundController(vocabulary);
-            isPlayAgain = newRoundController.isNewGame(scanner);
-            vocabulary = newRoundController.getVocabulary();
+            NewGameController newGameController = new NewGameController(vocabulary);
+            isPlayAgain = newGameController.isNewGame(scanner);
+            vocabulary = newGameController.getVocabulary();
         } while (isPlayAgain);
 
         scanner.close();
