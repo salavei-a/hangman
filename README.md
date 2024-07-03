@@ -6,16 +6,14 @@ encapsulated in different classes to maintain a clean and modular design.
 
 ## Usage
 
-1. When you run the game, you will be prompted to select a vocabulary language:
-    - Press "R" for Russian.
-    - Press "E" for English.
-2. After selecting the vocabulary language, you will be prompted to start a new game, change the vocabulary language or exit:
-    - Enter "N" to start a new game.
-    - Enter "C" to change the vocabulary language.
-    - Enter "X" to exit the game.
-3. If you start a new game, you will be prompted to guess letters to reveal the hidden word.
-4. The game will display the Hangman drawing and the number of mistakes.
-5. Continue guessing letters until you either guess the word correctly or run out of attempts.
+1. When you run the game, you will be prompted to select a vocabulary language.
+2. After selecting the vocabulary language, the game will start immediately, and you will be prompted to guess letters to reveal the hidden word.
+3. The game will display the Hangman drawing and the number of mistakes.
+4. Continue guessing letters until you either guess the word correctly or run out of attempts.
+5. After the game ends you will be prompted to start a new game, change the vocabulary language, or exit:
+   - Enter "Y" to start a new game.
+   - Enter "L" to change the vocabulary language.
+   - Enter "N" to exit the game.
 
 ## Contributing
 
