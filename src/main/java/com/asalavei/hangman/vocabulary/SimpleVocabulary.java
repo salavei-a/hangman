@@ -12,9 +12,9 @@ public abstract class SimpleVocabulary implements Vocabulary {
     private final List<String> words;
     protected VocabularyLanguage language;
 
-    protected SimpleVocabulary(String filePath, VocabularyLanguage language) {
-        this.words = load(filePath);
+    protected SimpleVocabulary(VocabularyLanguage language) {
         this.language = language;
+        this.words = load(language.getPath());
     }
 
     @Override
