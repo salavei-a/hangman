@@ -55,7 +55,7 @@ public class Game {
             System.out.println("Enter a letter: ");
             String letter = scanner.nextLine();
 
-            if (isCorrectLetter(letter)) {
+            if (!isCorrectLetter(letter)) {
                 System.out.println("Please enter a lowercase " + vocabulary.getLanguage().getName() + " letter");
                 continue;
             }
@@ -74,7 +74,7 @@ public class Game {
     }
 
     private boolean isCorrectLetter(String letter) {
-        return !letter.matches(vocabulary.getLanguage().getRegex());
+        return letter.matches(vocabulary.getLanguage().getRegex());
     }
 
     private void printMistakes(Hangman hangman) {

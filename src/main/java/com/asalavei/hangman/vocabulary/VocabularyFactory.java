@@ -1,15 +1,20 @@
 package com.asalavei.hangman.vocabulary;
 
+import java.util.EnumMap;
+import java.util.Map;
+
 public class VocabularyFactory {
+    private static final Map<VocabularyLanguage, Vocabulary> registry = new EnumMap<>(VocabularyLanguage.class);
+
+    static {
+        registry.put(VocabularyLanguage.RUSSIAN, RussianVocabulary.getInstance());
+        registry.put(VocabularyLanguage.ENGLISH, EnglishVocabulary.getInstance());
+    }
 
     private VocabularyFactory() {
     }
 
     public static Vocabulary createVocabulary(VocabularyLanguage vocabularyLanguage) {
-        return switch (vocabularyLanguage) {
-            case RUSSIAN -> RussianVocabulary.getInstance(VocabularyLanguage.RUSSIAN);
-            case ENGLISH -> EnglishVocabulary.getInstance(VocabularyLanguage.ENGLISH);
-            default -> throw new IllegalArgumentException("Unsupported vocabulary language: " + vocabularyLanguage);
-        };
+        return registry.get(vocabularyLanguage);
     }
 }

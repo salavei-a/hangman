@@ -15,7 +15,7 @@ public class VocabularyLanguageSelector {
         while (true) {
             String input = scanner.nextLine();
 
-            if (isNumber(input)) {
+            if (!isNumber(input)) {
                 System.out.println("Please enter a number!");
                 continue;
             }
@@ -38,12 +38,15 @@ public class VocabularyLanguageSelector {
     }
 
     private static boolean isNumber(String input) {
-        return !input.matches("\\d");
+        return input.matches("\\d");
     }
 
     private static void printAllVocabularyLanguages() {
-        for (VocabularyLanguage language : VocabularyLanguage.values()) {
-            System.out.println(language.ordinal() + 1 + ". " + language.getName());
+        VocabularyLanguage[] languages = VocabularyLanguage.values();
+
+        for (int i = 0; i < languages.length; i++) {
+            System.out.println(i + 1 + ". " + languages[i].getName());
+
         }
     }
 }
