@@ -7,11 +7,12 @@ public class VocabularyLanguageSelector {
     private VocabularyLanguageSelector() {
     }
 
-    private static final int RUSSIAN_VOCABULARY = 1;
-    private static final int ENGLISH_VOCABULARY = 2;
-
     public static VocabularyLanguage select(Scanner scanner) {
-        System.out.println("Select vocabulary language (1/2): \n1. Russian\n2. English");
+        System.out.println("Select vocabulary language:");
+
+        for (VocabularyLanguage language : VocabularyLanguage.values()) {
+            System.out.println(language.ordinal() + 1 + ". " + language.getName());
+        }
 
         while (true) {
             String input = scanner.nextLine();
@@ -23,12 +24,10 @@ public class VocabularyLanguageSelector {
 
             Integer vocabularyLanguage = Integer.parseInt(input);
 
-            if (vocabularyLanguage.equals(RUSSIAN_VOCABULARY)) {
-                return VocabularyLanguage.RUSSIAN;
-            } else if (vocabularyLanguage.equals(ENGLISH_VOCABULARY)) {
-                return VocabularyLanguage.ENGLISH;
+            if (vocabularyLanguage > 0 && vocabularyLanguage <= VocabularyLanguage.values().length) {
+                return VocabularyLanguage.values()[vocabularyLanguage - 1];
             } else {
-                System.out.println("Please enter 1 or 2!");
+                System.out.println("Please enter the correct language number!");
             }
         }
     }
