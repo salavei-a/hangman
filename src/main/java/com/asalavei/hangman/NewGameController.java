@@ -1,6 +1,7 @@
 package com.asalavei.hangman;
 
 import com.asalavei.hangman.vocabulary.Vocabulary;
+import com.asalavei.hangman.vocabulary.VocabularyFactory;
 import com.asalavei.hangman.vocabulary.VocabularyLanguageSelector;
 
 import java.util.Scanner;
@@ -8,7 +9,7 @@ import java.util.Scanner;
 public class NewGameController {
     private static final String PLAY = "Y";
     private static final String EXIT = "N";
-    private static final String PLAY_WITH_DIF_VOCABULARY = "L";
+    private static final String SELECT_VOCABULARY_LANGUAGE = "L";
 
     private Vocabulary vocabulary;
 
@@ -24,13 +25,13 @@ public class NewGameController {
         String answer;
         do {
             System.out.println("Want to play another game? [Y/N]");
-            System.out.println("Play with another vocabulary language: [L]");
+            System.out.println("Select vocabulary language: [L]");
 
             answer = scanner.nextLine();
-        } while (!answer.equalsIgnoreCase(PLAY) && !answer.equalsIgnoreCase(PLAY_WITH_DIF_VOCABULARY) && !answer.equalsIgnoreCase(EXIT));
+        } while (!answer.equalsIgnoreCase(PLAY) && !answer.equalsIgnoreCase(SELECT_VOCABULARY_LANGUAGE) && !answer.equalsIgnoreCase(EXIT));
 
-        if (answer.equalsIgnoreCase(PLAY_WITH_DIF_VOCABULARY)) {
-            vocabulary = VocabularyLanguageSelector.change(vocabulary);
+        if (answer.equalsIgnoreCase(SELECT_VOCABULARY_LANGUAGE)) {
+            vocabulary = VocabularyFactory.createVocabulary(VocabularyLanguageSelector.select(scanner));
             answer = PLAY;
         }
 

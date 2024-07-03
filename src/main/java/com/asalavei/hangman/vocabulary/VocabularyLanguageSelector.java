@@ -10,37 +10,40 @@ public class VocabularyLanguageSelector {
     public static VocabularyLanguage select(Scanner scanner) {
         System.out.println("Select vocabulary language:");
 
-        for (VocabularyLanguage language : VocabularyLanguage.values()) {
-            System.out.println(language.ordinal() + 1 + ". " + language.getName());
-        }
+        printAllVocabularyLanguages();
 
         while (true) {
             String input = scanner.nextLine();
 
-            if (!input.matches("\\d")) {
+            if (isNumber(input)) {
                 System.out.println("Please enter a number!");
                 continue;
             }
 
-            Integer vocabularyLanguage = Integer.parseInt(input);
+            int inputVocabularyLanguage = Integer.parseInt(input);
 
-            if (vocabularyLanguage > 0 && vocabularyLanguage <= VocabularyLanguage.values().length) {
-                return VocabularyLanguage.values()[vocabularyLanguage - 1];
+            if (isCorrectVocabularyLanguage(inputVocabularyLanguage)) {
+                VocabularyLanguage vocabularyLanguage = VocabularyLanguage.values()[inputVocabularyLanguage - 1];
+                System.out.println("Selected " + vocabularyLanguage.getName() + " vocabulary language.");
+
+                return vocabularyLanguage;
             } else {
                 System.out.println("Please enter the correct language number!");
             }
         }
     }
 
-    public static Vocabulary change(Vocabulary vocabulary) {
-        VocabularyLanguage vocabularyLanguage = vocabulary.getLanguage();
+    private static boolean isCorrectVocabularyLanguage(int inputVocabularyLanguage) {
+        return inputVocabularyLanguage > 0 && inputVocabularyLanguage <= VocabularyLanguage.values().length;
+    }
 
-        vocabularyLanguage = (vocabularyLanguage == VocabularyLanguage.RUSSIAN)
-                ? VocabularyLanguage.ENGLISH
-                : VocabularyLanguage.RUSSIAN;
+    private static boolean isNumber(String input) {
+        return !input.matches("\\d");
+    }
 
-        System.out.println("Selected " + vocabularyLanguage.getName() + " vocabulary language.");
-
-        return VocabularyFactory.createVocabulary(vocabularyLanguage);
+    private static void printAllVocabularyLanguages() {
+        for (VocabularyLanguage language : VocabularyLanguage.values()) {
+            System.out.println(language.ordinal() + 1 + ". " + language.getName());
+        }
     }
 }
